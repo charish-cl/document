@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "LJ/qUl2f81HY86fM4ove1OP2o7DaUE6nd1wd+zZKcRh2YKZNt0Q5SbKffNq8b6EdN4E7rEqWd8kOfxJKwPmS+w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\侯超孟\\Desktop\\Project\\document\\琴书\\深入解析C#（第4版）随书资料\\Chapter08\\Chapter08.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\侯超孟\\.nuget\\packages\\jonskeet.demoutil\\1.1.0\\jonskeet.demoutil.1.1.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\system.componentmodel\\4.3.0\\system.componentmodel.4.3.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\system.componentmodel.primitives\\4.3.0\\system.componentmodel.primitives.4.3.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\system.globalization\\4.3.0\\system.globalization.4.3.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\system.resources.resourcemanager\\4.3.0\\system.resources.resourcemanager.4.3.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512"
+  ],
+  "logs": []
+}
