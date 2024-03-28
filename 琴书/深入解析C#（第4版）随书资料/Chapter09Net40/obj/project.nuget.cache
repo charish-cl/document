@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Xnx8bAnDdMi2QTxHq4lzbX8VKpwlMh/DdCmO0q1IeYkk4/T5gujxgPxrWvKHPcTMMXcEYQUNz90fABRDCiHPRQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\侯超孟\\Desktop\\Project\\document\\琴书\\深入解析C#（第4版）随书资料\\Chapter09Net40\\Chapter09Net40.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\侯超孟\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "C:\\Users\\侯超孟\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net40\\1.0.3\\microsoft.netframework.referenceassemblies.net40.1.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

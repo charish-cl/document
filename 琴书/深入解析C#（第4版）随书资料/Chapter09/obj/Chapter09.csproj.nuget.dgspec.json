@@ -1,0 +1,71 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\侯超孟\\Desktop\\Project\\document\\琴书\\深入解析C#（第4版）随书资料\\Chapter09\\Chapter09.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\侯超孟\\Desktop\\Project\\document\\琴书\\深入解析C#（第4版）随书资料\\Chapter09\\Chapter09.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\侯超孟\\Desktop\\Project\\document\\琴书\\深入解析C#（第4版）随书资料\\Chapter09\\Chapter09.csproj",
+        "projectName": "Chapter09",
+        "projectPath": "C:\\Users\\侯超孟\\Desktop\\Project\\document\\琴书\\深入解析C#（第4版）随书资料\\Chapter09\\Chapter09.csproj",
+        "packagesPath": "C:\\Users\\侯超孟\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\侯超孟\\Desktop\\Project\\document\\琴书\\深入解析C#（第4版）随书资料\\Chapter09\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\侯超孟\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net462"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net462": {
+            "targetAlias": "net462",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net462": {
+          "targetAlias": "net462",
+          "dependencies": {
+            "JonSkeet.DemoUtil": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            },
+            "System.ValueTuple": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win7-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
