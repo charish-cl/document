@@ -221,7 +221,13 @@ public void CheckResources(string currentVariant, bool ignoreOtherVariant)
 
 LoadBytes是用DefaultResourceHelper，用UnityWebRequest请求服务器上的文件
 
+### //TODO:怎么检测到是否要更新资源的
 
+https://zhuanlan.zhihu.com/p/431447567
+
+![image-20240329204827712](assets/image-20240329204827712.png)
+
+既然本地版本号存在GameFrameworkVersion.dat中，那BuildInfo是干什么的？
 
 ### 加载成功后
 
@@ -657,3 +663,8 @@ Download failure, download serial id '1', download path 'C:/Users/Administrator/
 
 
 
+本地包的版本号是不会变的，资源版本号呢？好像也不会变，
+
+```
+版本不一致强更
+```
