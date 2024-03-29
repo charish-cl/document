@@ -6,6 +6,12 @@ https://www.lfzxb.top/hybridclr-source-analyze/
 
 https://hybridclr.doc.code-philosophy.com/docs/basic/install#hybridclrinstaller%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86
 
+
+
+## 安装原理
+
+
+
 ## C#什么是AOT JIT
 
 在C#中，AOT（Ahead-of-Time）编译和JIT（Just-In-Time）编译是两种不同的代码编译策略，它们在.NET应用程序的执行性能和部署方式上有着显著的差异。

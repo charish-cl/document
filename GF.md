@@ -10,9 +10,21 @@ StartForce只有dll
 
 ![image-20240318093946260](assets/image-20240318093946260.png)
 
+## 版本号处理
+
+/Library/Frameworks/Python.framework/Versions/3.12/bin/python3
+
+**PATH="/Library/Frameworks/Python.framework/Versions/3.12/bin:${PATH}"
+export PATH**
+alias python="/Library/Frameworks/Python.framework/Versions/3.12/bin/python3"
+
 ## 接入HybridCLR
 
 https://blog.csdn.net/final5788/article/details/125965514
+
+### 第一次打包注意事项
+
+要先Install一下，打包机那边 
 
 接入划分程序集后Procedure就找不到了
 
