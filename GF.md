@@ -38,7 +38,7 @@ https://blog.csdn.net/final5788/article/details/125965514
 
 ![image-20240326160655976](assets/image-20240326160655976.png)
 
-### 如何使用GameEntry
+## 如何使用GameEntry
 
 分为GFBuildIn和GF，后者继承前者
 
@@ -96,9 +96,18 @@ Debug.Log(Application.persistentDataPath);
 
 ![](assets/image-20240323114045790.png)
 
-###  检查版本资源列表
+###  检查版本
 
 这个方法会在ProcedureCheckVersion中调用
+
+GameFrameVersionList文件不存在，或者资源号不存在，或者不一致都会更新
+
+```cs
+if (internalResourceVersion != latestInternalResourceVersion)
+{
+    return CheckVersionListResult.NeedUpdate;
+}
+```
 
 ```cs
 /// <summary>
@@ -156,9 +165,13 @@ public CheckVersionListResult CheckVersionList(int latestInternalResourceVersion
 }
 ```
 
+#### UpdatableVersionList 
+
+
+
 ### 更新版本
 
-从服务器上下载GameFrameworkVersion.dat
+从服务器上下载GameFrameworkVersion.dat，直接覆盖掉
 
 ```cs
 /// <summary>
@@ -364,9 +377,21 @@ private bool DownloadResource(UpdateInfo updateInfo)
 }
 ```
 
-### GameFrameworkVersion.dat文件
+
+
+
+
+### GameFrameworkVersion.dat 文件
 
 包含了一些校验信息
+
+
+
+BuildInfo除了填应用商店下载地址，好像也没啥用 
+
+VersionInfo 对应服务端那个
+
+![image-20240401091605250](assets/image-20240401091605250.png)
 
 ## NetWork
 
@@ -663,8 +688,38 @@ Download failure, download serial id '1', download path 'C:/Users/Administrator/
 
 
 
-本地包的版本号是不会变的，资源版本号呢？好像也不会变，
+本地包的版本号AppVersion是不会变的  
+
+内部游戏版本号 没用到过
+
+资源版本号呢   会变 ，作为更新资源用 保存在GameFrameWorkVersion
 
 ```
-版本不一致强更
+资源版本不一致强更
 ```
+
+```cs
+if (!m_ResourceManager.m_UpdatableVersionListSerializer.TryGetValue(fileStream, "InternalResourceVersion", out internalResourceVersionObject))
+{
+    return CheckVersionListResult.NeedUpdate;
+}
+```
+
+
+
+## 如何保存游戏版本
+
+
+
+## VersionInfo 是必须的吗
+
+生成的那些配置，不会变动的，放到BuildInfo就好了
+
+
+
+
+
+## il2cpp打包慢
+
+https://blog.csdn.net/lcl20093466/article/details/124633182
+
