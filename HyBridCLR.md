@@ -1,8 +1,8 @@
 ## 原理
 
-https://www.lfzxb.top/hybridclr-source-analyze/
+https://www.lfzxb.top/hybridclr-source-analyze/ 
 
-
+https://www.zhihu.com/column/c_1489549396035870720 官方
 
 https://hybridclr.doc.code-philosophy.com/docs/basic/install#hybridclrinstaller%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86
 
@@ -73,6 +73,12 @@ https://docs.unity3d.com/Manual/ManagedCodeStripping.html
 
 `HybridCLR/Generate/LinkXml`， 能一键生成热更新工程里的所有AOT类型及函数引用。
 
+### 预留你将来可能用到的类型
+
+com.code-philosophy.hybridclr的`HybridCLR/Generate/LinkXml`命令虽然可以智能地扫描出你当前引用的AOT类型，却不能预知你未来将来使用的 类型。因此你仍然需要有规划地提前在 `Assets/link.xml`(注意！不是自动生成的那个link.xml)预留你将来 可能用到的类型。切记不要疏漏，免得出现上线后某次更新使用的类型被裁剪的尴尬状况！
+
+
+
 
 
 
@@ -107,3 +113,18 @@ https://hybridclr.doc.code-philosophy.com/docs/basic/aotgeneric
     }
 ```
 
+# 使用
+
+
+
+## 必须设置为Disable才能不开启huatuo
+
+IPreprocessBuildWithReport
+
+Description
+
+Implement this interface to receive a callback before the Player build is started.
+
+不然如果Enable状态会自动设置为IL2cpp
+
+![image-20240403100753303](assets/image-20240403100753303.png)
