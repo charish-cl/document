@@ -38,7 +38,7 @@ https://blog.csdn.net/final5788/article/details/125965514
 
 ![image-20240326160655976](assets/image-20240326160655976.png)
 
-### 如何使用GameEntry
+## 如何使用GameEntry
 
 分为GFBuildIn和GF，后者继承前者
 

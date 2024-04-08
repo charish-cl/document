@@ -128,3 +128,6 @@ Implement this interface to receive a callback before the Player build is starte
 不然如果Enable状态会自动设置为IL2cpp
 
 ![image-20240403100753303](assets/image-20240403100753303.png)
+## 程序集划分方案
+
+https://www.jianshu.com/p/51a9a757d238

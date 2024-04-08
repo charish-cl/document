@@ -44,6 +44,38 @@ https://blog.csdn.net/qq_52855744/article/details/136046146?spm=1001.2014.3001.5
 
 
 
+修改分支名
+
+先将本地分支重命名
+
+```
+git branch -m oldBranch newBranch
+```
+
+删除远程分支（远端无此分支则跳过该步骤）
+
+```
+git push --delete origin oldBranch
+```
+
+将重命名后的分支推到远端
+
+```
+git push origin newBranch
+```
+
+把修改后的本地分支与远程分支关联
+
+```
+git branch --set-upstream-to origin/newBranch
+```
+
+
+## git只忽略本地
+
+https://luisdalmolin.dev/blog/ignoring-files-in-git-without-gitignore/
+
+https://mengqi92.github.io/2020/07/17/hide-files-from-git/
 # fork如何更新
 
 ![image-20240319115917690](assets/image-20240319115917690.png)
@@ -63,12 +95,3 @@ https://blog.csdn.net/qq_52855744/article/details/136046146?spm=1001.2014.3001.5
 
 因此，主要区别在于 `git fetch` 只是获取远程仓库的更新但不会直接合并到当前分支，而 `git pull` 则会获取并合并远程更新到当前分支。选择使用哪个命令取决于您的工作流程和需求：如果您想查看更新并手动决定如何合并，可以使用 `git fetch`；如果您希望自动合并更新到当前分支，可以使用 `git pull`。
 
-
-
-
-
-## git只忽略本地
-
-https://luisdalmolin.dev/blog/ignoring-files-in-git-without-gitignore/
-
-https://mengqi92.github.io/2020/07/17/hide-files-from-git/
