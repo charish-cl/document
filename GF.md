@@ -110,6 +110,10 @@ if (internalResourceVersion != latestInternalResourceVersion)
 ```
 
 ```cs
+ //TODO:这个源码有必要看
+m_NeedUpdateVersion = 
+    GF.Resource.CheckVersionList(m_VersionInfo.InternalResourceVersion) ==CheckVersionListResult.NeedUpdate;
+--------------------------------
 /// <summary>
 /// 检查版本资源列表。
 /// </summary>
@@ -393,6 +397,10 @@ VersionInfo 对应服务端那个
 
 ![image-20240401091605250](assets/image-20240401091605250.png)
 
+
+
+
+
 ## NetWork
 
 http://www.benmutou.com/archives/2630
@@ -411,7 +419,17 @@ Json作为参数的时候，要设置www.SetRequestHeader("Content-Type", "appli
 
 ![image-20240325101354743](assets/image-20240325101354743.png)
 
+#### WWWForm Header与Data都是只读的
 
+只能先new一个UnityWebRequest，再去request.SetRequestHeader("Authorization", "Bearer " + Token);
+
+![image-20240407173446201](assets/image-20240407173446201.png)
+
+### Json格式问题
+
+服务端要看首字母是否大小写，以免转Json时出问题
+
+https://blog.csdn.net/qq_39569480/article/details/105724286
 
 ```cs
 /// <summary>
@@ -722,4 +740,12 @@ if (!m_ResourceManager.m_UpdatableVersionListSerializer.TryGetValue(fileStream, 
 ## il2cpp打包慢
 
 https://blog.csdn.net/lcl20093466/article/details/124633182
+
+
+
+
+
+## Swagger接口响应代码重复
+
+能否按照一定规则生成相关代码 Rosyln？
 
