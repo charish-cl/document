@@ -556,6 +556,14 @@ m_ConfigurationPath = Type.GetConfigurationPath<ResourceBuilderConfigPathAttribu
 
 
 
+## 对象池
+
+[GameFramework解析：对象池 (Object Pool)](https://zhuanlan.zhihu.com/p/439730172)
+
+引用池是class，对象池一般是Unity GameObject对象
+
+
+
 ## UI
 
 ![UI](assets/UI.jpg)
@@ -575,6 +583,41 @@ m_ConfigurationPath = Type.GetConfigurationPath<ResourceBuilderConfigPathAttribu
 ### 打开UI界面
 
 ![image-20240318094555523](assets/image-20240318094555523-1710726357563-1.png)
+
+### 思考
+
+看花桑的代码，UI从来不进行逻辑运算，也从不持有List这种丑陋的写法，事件自动订阅，关闭时自动取消，很好
+
+如果是显示逻辑按钮点击直接处理就行了，如果涉及到请求与计算，发个事件吧
+
+
+
+对于挂载和直接Show出来点Item，如何优雅的满足两种需求呢
+
+```cs
+public virtual void OnInit(object data)
+{
+
+}
+
+public virtual void UpdateData(object data)
+{
+
+
+}
+
+/// <summary>
+/// 手动调用初始化操作
+/// </summary>
+public  void Show()
+{
+    OnInit(null);
+}
+```
+
+EventSubscriber与ItemSubscriber
+
+
 
 ## EventPool
 
