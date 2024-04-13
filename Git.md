@@ -71,11 +71,6 @@ git branch --set-upstream-to origin/newBranch
 ```
 
 
-## git只忽略本地
-
-https://luisdalmolin.dev/blog/ignoring-files-in-git-without-gitignore/
-
-https://mengqi92.github.io/2020/07/17/hide-files-from-git/
 # fork如何更新
 
 ![image-20240319115917690](assets/image-20240319115917690.png)
@@ -95,3 +90,43 @@ https://mengqi92.github.io/2020/07/17/hide-files-from-git/
 
 因此，主要区别在于 `git fetch` 只是获取远程仓库的更新但不会直接合并到当前分支，而 `git pull` 则会获取并合并远程更新到当前分支。选择使用哪个命令取决于您的工作流程和需求：如果您想查看更新并手动决定如何合并，可以使用 `git fetch`；如果您希望自动合并更新到当前分支，可以使用 `git pull`。
 
+# git只忽略本地
+
+https://luisdalmolin.dev/blog/ignoring-files-in-git-without-gitignore/
+
+https://mengqi92.github.io/2020/07/17/hide-files-from-git/
+
+
+
+# git stash 
+
+
+
+## auto stash 合并前暂存
+
+切换分支时，如果当前分支有修改，又不想提交或放弃，可以使用 git stash 将改动存到暂存区。
+
+git stash 后即可以随意切换分支，切换后再使用 git stash pop 即可将暂存区的改动恢复至当前分支。
+
+但如果使用 git stash pop 后有冲突时，如何撤销?
+
+可以使用 git reset --hard ，即可撤销 git stash pop 操作，将当前分支状态恢复。
+
+而该操作后，git stash 暂存区的记录也不会被删除，可通过 git stash show 查看。
+
+
+
+
+
+```cs
+git stash              暂存状态
+git stash list       查看暂存列表
+git stash clear   清空暂存列表
+git stash drop stash@{0} 删除第一个暂存
+
+git stash save "说明"    暂存未提交工作区
+git stash pop                  恢复
+git stash apply 
+git stash apply         将缓存堆栈中的stash多次应用到工作目录中，但并不删除stash拷贝
+git stash apply stash@{0}  指定使用哪一个stash
+```
