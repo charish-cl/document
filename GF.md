@@ -1,4 +1,58 @@
+# TowerDefence
 
+
+
+## UI
+
+TowerContoller 升级界面
+
+在LevelControl那里检测点击塔的事件，用射线检测，打开UI时把塔的数据传过去
+
+```csharp
+GameEntry.UI.OpenUIForm(EnumUIForm.UITowerControllerForm, entityDataTower.Tower);
+```
+
+打开页面也要读数据的
+
+```csharp
+
+protected override void OnOpen(object userData)
+{
+    base.OnOpen(userData);
+
+    dataLevel = GameEntry.Data.GetData<DataLevel>();
+    if (dataLevel == null)
+        return;
+
+    currentLevelData = dataLevel.GetLevelData(dataLevel.CurrentLevelIndex);
+    if (currentLevelData == null)
+        return;
+
+    dataTower = GameEntry.Data.GetData<DataTower>();
+    if (dataTower == null)
+        return;
+
+    ShowTowerBuildButtons();
+    buildInfo.anchoredPosition = new Vector2(buildInfo.anchoredPosition.x, -200);
+    showBuildInfo = false;
+
+    Subscribe(HidePreviewTowerEventArgs.EventId, OnHidePreviewTower);
+}
+```
+
+### EntityLoader
+
+创建时注册实体创建成功的事件，用实体Id作为key，保存实体在字典里
+
+UI中虽然持有这个，但没有使用过，应该是不提倡UI写逻辑的，这种与战斗相关的
+
+
+
+## Item
+
+Item只有两个，选关界面和建塔界面 
+
+![image-20240413213033803](assets/image-20240413213033803.png)
 
 # GF
 
