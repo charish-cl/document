@@ -1,4 +1,95 @@
+# A大语录
+
+
+
+这个得看看dotween的编辑器代码了，估计是默认判断这个目录是否存在 不存在的话就创建这个
+
+实测不行，dotween写的比较蠢不支持自定义目录 只认根目录的Resources文件夹
+
+
+
+## UI配置问题
+
+今天突发奇想要是有个工具，把切换页面跳的都可以配置，与游戏代码完全隔离开，用GrapView
+
+
+
+```csharp
+最好的方式 再加一份声音配置表。通过声音 id 走拓展方法播放。
+其实包括 UI 最好都加一份 ui 配置表
+```
+
+![image-20240425102000904](assets/image-20240425102000904.png)
+
+![image-20240425101812858](assets/image-20240425101812858.png)
+
+![image-20240425101745832](assets/image-20240425101745832.png)
+
+
+
+## 分渠道打包问题
+
+细节我记不太清了 我记得直接在 unityplayactivity 调用调用层的java 类。还封装了一个 sdk 的调用层的 java 类，对应的包在这个调用层引用
+
+按照渠道分文件夹，放里面啊 里面还有 AndroidMainfest 的配置呢
+
+一个渠道一个调用类啊...不理解为啥会有你提出的问题
+
+打包的母工程没有任何渠道的，后处理的时候根据渠道的 java 文件和 sdk 组装成新的
+
+都说了，没有那么复杂。组合之前母工层是没有调用任何渠道的SDK跟引用包的，包括也没有SDK的文件。你组合之后只是把。你最简单的方法就一个渠道一个 MainActivity。拷贝过去就行了.
+
+
+
+## Window与Panel的区分
+
+我今天在搞UI这块 哪些部分用来分window还有点懵 上家刚开始写的时候还是单独分了全屏的panel和popupwindow这样
+
+
+
+![image-20240425102426894](assets/image-20240425102426894.png)
+
+![image-20240425102342003](assets/image-20240425102342003.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 感觉事件主要是跟UI进行联动的，视图与逻辑分离
+
+```csharp
+确实如此 
+```
+
+
 
 ### ui中可以使用System中的方法，反过来通过事件分发，这样的好处是？
 
@@ -33,7 +124,44 @@ Player类
 
 # TEngine
 
+## Module模块
 
+UpdateModuleAttribute，注入此属性标识模块需要轮询
+
+如何把Module与ModuleImp关联起来
+
+很简单
+
+```csharp
+声明接口 IProcedureManager
+ProcedureManager 继承 IProcedureManager
+如下，实现了依赖注入    
+public sealed class ProcedureModule : Module
+{
+    private IProcedureManager _procedureManager = null;
+	protected override void Awake()
+        {
+            base.Awake();
+            _procedureManager = ModuleImpSystem.GetModule<IProcedureManager>();
+            if (_procedureManager == null)
+            {
+                Log.Fatal("Procedure manager is invalid.");
+            }
+        }
+}
+```
+
+### 如何通过接口找到对应Imp模块的
+
+```csharp
+module.Name.Substring(1) 把I去掉就可以了
+```
+
+![image-20240426141631400](assets/image-20240426141631400.png)
+
+
+
+![image-20240426115744920](assets/image-20240426115744920.png)
 
 ## 事件模块
 
@@ -142,5 +270,91 @@ public static bool AddEventListener<TArg1, TArg2>(int eventType, Action<TArg1, T
 
 ## UI模块
 
+### 自动绑定工具
 
+![image-20240417203950014](assets/image-20240417203950014.png)
+
+### 异性屏支持
+
+![image-20240417203842198](assets/image-20240417203842198.png)
+
+
+
+### Widget模块
+
+### UIWindow
+
+并没有继承Monobehavior而是选择在类中持有对象
+
+```csharp
+
+using UnityGameFramework.Runtime;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+namespace MonoPoly
+{
+    public class ShopUIForm : UIFormLogicExtend
+    {
+        
+        public Button Right { get;  set; }
+        public Image BillboardBgImg { get;  set; }
+        public Button Left { get;  set; }
+        public RectTransform BillboardBottomIcon { get;  set; }
+        public Button CloseBtn { get;  set; }
+
+        protected override void OnInit(object userData)
+        {
+            base.OnInit(userData);
+            
+            Right = transform.Find("Billboard/Top/m_btn_Right").GetComponent<Button>();
+            Right.onClick.AddListener(() => OnClick_Right());
+            BillboardBgImg = transform.Find("Billboard/Top/m_img_BillboardBgImg").GetComponent<Image>();
+            Left = transform.Find("Billboard/Top/m_btn_Left").GetComponent<Button>();
+            Left.onClick.AddListener(() => OnClick_Left());
+            BillboardBottomIcon = transform.Find("Billboard/Top/m_rect_BillboardBottomIcon").GetComponent<RectTransform>();
+            CloseBtn = transform.Find("Bottom/m_btn_CloseBtn").GetComponent<Button>();
+            CloseBtn.onClick.AddListener(() => OnClick_CloseBtn());
+
+        }
+
+        protected override void OnOpen(object userData)
+        {
+            base.OnOpen(userData);
+        }
+
+        protected override void OnClose(bool isShutdown, object userData)
+        {
+            base.OnClose(isShutdown, userData);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+        }
+        
+        private void OnClick_Right()
+        {
+        
+        }
+
+        private void OnClick_Left()
+        {
+        
+        }
+
+        private void OnClick_CloseBtn()
+        {
+        
+        }
+
+
+    }
+}
+```
 

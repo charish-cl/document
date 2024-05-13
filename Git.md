@@ -130,3 +130,11 @@ git stash apply
 git stash apply         将缓存堆栈中的stash多次应用到工作目录中，但并不删除stash拷贝
 git stash apply stash@{0}  指定使用哪一个stash
 ```
+
+
+
+# unity 版本控制
+
+[预制体missing 脚本](https://juejin.cn/post/7103059921020649508)
+
+挂载在预制体的脚本，类名要和文件名相同，不然会missing

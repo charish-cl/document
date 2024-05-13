@@ -132,9 +132,28 @@ public class ExampleView : MonoBehaviour
 
 
 
-# 参考
+# 参考文章
 
 https://github.com/vovgou/loxodon-framework/blob/master/README_CN.md
+
+
+
+## 锚点锚框好文
+
+作者：巨龙饿了
+链接：https://www.jianshu.com/p/4592bf809c8b
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+[UGUI锚点(Anchors)，轴点(Pivot)及RectTransform组件详解](https://www.jianshu.com/p/5aa5299b491f)
+
+## 官方文档
+
+https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/UIAutoLayout.html
+
+
 
 # 课程
 
@@ -143,14 +162,6 @@ https://edu.uwa4d.com/course-intro/0/138
 
 
 ## https://github.com/XINCGer/Unity3DTraining/tree/master/UGUITraining
-
-# 工具
-
-对齐
-
-[GitHub - baba-s/UniUGUIToolbar: 【Unity】uGUI ](https://github.com/baba-s/UniUGUIToolbar)
-
-https://github.com/liuhaopen/UGUI-Editor
 
 # 原理
 
@@ -170,104 +181,95 @@ https://github.com/liuhaopen/UGUI-Editor
 
 
 
-https://www.jianshu.com/p/9f652a00d873
-
-
-
 ## 刘海屏
 
 [Unity UI适配总结](https://zhuanlan.zhihu.com/p/482944918)
 
 [【游戏开发进阶】Unity Android刘海屏适配，帮你封装了jar，你不用写java了，直接用c#调用即可_林新发的博客-CSDN博客_unity3d 刘海屏](https://linxinfa.blog.csdn.net/article/details/115346335)
 
-# 相对布局
+A大的代码。。。
 
-
-
-
+## 相对布局
 
 就是出现锚框的情况
 
-
-
-# 绝对布局
-
-
+## 绝对布局
 
 瞄框与锚点重合
 
-
-
 在`绝对布局`的情况下，`PosX`和`PosY`的值就是Pivot到锚点的值
 
+# UI属性
 
-
-# sizeDelta
+## sizeDelta
 
 
 
 ### 瞄点情况
 
-
-
 **sizeDelta的值就是OffsetMax-OffsetMin的值**
-
-
 
 ### 瞄框
 
-
-
 在锚框的情况下，offstMax减去Min，得到的将不再是UI元素的大小，而是一个新的奇怪的向量，这个向量代表的物理意义是，**sizeDelta.x值就是锚框的宽度与UI元素的宽度的差值，sizeDelta.y的值就是锚框的的高度与UI元素的高度的差值**
 
-
-
 在锚框的情况下，offstMax减去Min，得到的将不再是UI元素的大小，而是一个新的奇怪的向量，这个向量代表的物理意义是，**sizeDelta.x值就是锚框的宽度与UI元素的宽度的差值，sizeDelta.y的值就是锚框的的高度与UI元素的高度的差值**
-
-
 
 Pivot中心点，就是该UI元素旋转缩放的中心点，左下角为(0,0)右上角为(1,1)
 
-
-
 **这个属性之所以叫做sizeDelta，是因为在锚点情况下其表征的是size（大小），在锚框的情况下其表征的是Delta（差值）**
 
+## Canvas
 
+https://www.arkaistudio.com/blog/2016/03/28/unity-ugui-
 
-作者：巨龙饿了
-链接：https://www.jianshu.com/p/4592bf809c8b
-
-
-
-## [UGUI锚点(Anchors)，轴点(Pivot)及RectTransform组件详解](https://www.jianshu.com/p/5aa5299b491f)
-
-
-
-锚点:
-
-
-
-轴点:小圆环
-
-
-
-
-
-
-
-# Canvas
-
-
-
-https://www.arkaistudio.com/blog/2016/03/28/unity-ugui-原理篇二：canvas-scaler-縮放核心/
-
-
+原理篇二：canvas-scaler-縮放核心/
 
 Scale Factor直接縮放所有UI元素
 
+### 三种模式下的Canvas坐标
+
+```csharp
+[Button]
+public void DebugPosition()
+{
+    GetComponentInParent<Canvas>().renderMode = RenderMode.WorldSpace;
+    Debug.Log($"renderMode:{GetComponentInParent<Canvas>().renderMode} transform.position:{transform.position}");
+    GetComponentInParent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+    GetComponentInParent<Canvas>().worldCamera = Camera.main;
+    Debug.Log($"renderMode:{GetComponentInParent<Canvas>().renderMode} transform.position:{transform.position}");
+    GetComponentInParent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+    Debug.Log($"renderMode:{GetComponentInParent<Canvas>().renderMode} transform.position:{transform.position}");
+}
+```
+
+#### 对Canvas执行
+
+![image-20240419094746434](assets/image-20240419094746434.png)
 
 
-# anchoredPosition
+
+在Unity中，当Canvas的渲染模式为Screen Space - Camera时，Canvas的位置是相对于相机的。如果你的Canvas的位置是(0, 1, 90)，那么这个位置是相对于相机的。
+
+这个位置的含义是：
+
+x = 0：Canvas的中心点在相机的x轴上。
+
+y = 1：Canvas的中心点在相机的y轴上，且在相机的上方1个单位。
+
+z = 90：Canvas的中心点在相机的z轴上，且在相机的前方90个单位。
+
+所以，Canvas的中心点实际上是在相机的前方90个单位，且在相机的上方1个单位。这就是为什么你看到的x坐标是0的原因。
+
+
+
+#### 对UI执行
+
+
+
+![image-20240419095948969](assets/image-20240419095948969.png)
+
+## anchoredPosition
 
 
 
@@ -279,14 +281,9 @@ Scale Factor直接縮放所有UI元素
 
 
 
-作者：巨龙饿了
-链接：https://www.jianshu.com/p/4592bf809c8b
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 
-
-# ScreenPointToLocalPointInRectangle
+## ScreenPointToLocalPointInRectangle
 
 
 
@@ -312,19 +309,11 @@ public static bool ScreenPointToLocalPointInRectangle(RectTransform rect, Vector
 
 transform.position对应UI锚点的位置,锚点决定了UI坐标轴的圆点
 
-
-
 1920*1080屏幕,左下角都是(0,0)右上角(1920,1080)
-
-
 
 屏幕左下角为（0,0）点【原点】，右上角为（Screen.宽度，Screen高度）
 
-
-
 UI坐标的起点位置是屏幕中心点，如果想实现一个鼠标点击到哪，图片就出现在哪，需要将屏幕坐标`Input.mousePosition`转化为UI坐标。比如屏幕坐标值是（Screen.width/2，Screen.height/2），在UI坐标里正好是0
-
-
 
 Canvas以原点中心
 
@@ -336,9 +325,7 @@ Canvas以原点中心
 
 Content与Viewport大小一致，就无法移动，大于Viewport才可以移动。
 
-# 文档
 
-https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/UIAutoLayout.html
 
 
 
@@ -346,8 +333,175 @@ https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/UIAutoLayout.html
 
 [Unity 3D之UI设置父子关系setParent坑 - CodeAntenna](https://codeantenna.com/a/ql6KctqvMy)
 
+
+
+DoTween GetComponent<RectTransform>().DOMoveY()
+
+与transform.DOMoveY不太一样，
+
+如何写个通用的移到UI边缘的方法？
+
+
+
+```csharp
+var pos = RedBtn.transform.localPosition;
+RedBtn.transform.DOMoveY(BottomDisc.transform.position.y+0.4f,0.5f);
+CloseActions.Add(() =>
+{
+    RedBtn.transform.localPosition = pos;
+});
+```
+
+
+
 # UGUI源码
 
 [UGUI源码分析](https://blog.csdn.net/qq_28820675/category_9923575.html)
 
 [UGUI源码解读、性能优化、图文混排等](https://www.zhihu.com/column/c_1440746540318650368)
+
+
+
+
+
+```csharp
+TweenerCore<Vector2, Vector2, VectorOptions> AnimMoveOutImp(RectTransform rectTransform,float duration = 0.5f)
+        {
+            var anchoredPosition = rectTransform.anchoredPosition;
+            var bottomDistance = anchoredPosition.y -= GetBottomDistance(rectTransform);
+            return rectTransform.DOAnchorPosY(bottomDistance, duration);
+        }
+   
+       
+
+        /// <summary>
+        /// 获取UI上边缘左上角顶部到屏幕底部的距离
+        /// </summary>
+        /// <returns></returns>
+        public float GetBottomDistance(RectTransform rectTransform)
+        {
+            // 获取UI元素在屏幕上的边界
+            Vector3[] corners = new Vector3[4];
+            rectTransform.GetWorldCorners(corners);
+
+            // 计算UI元素上面的Y坐标
+            float bottomY = corners[1].y;
+
+            // 计算屏幕底部的Y坐标
+            float screenHeight = Screen.height;
+            float screenBottomY = 0; // 屏幕底部Y坐标
+
+            // 计算UI到屏幕底部的距离
+            float distanceToBottom = bottomY - screenBottomY;
+            
+            return distanceToBottom;
+        }
+```
+
+
+
+# UI位置
+
+## 移动到屏幕中央
+
+
+
+```csharp
+var uiElement = GetComponent<RectTransform>();
+Vector2 center = new Vector2(0.5f, 0.5f); // 屏幕中央的锚点位置
+uiElement.pivot = center;
+uiElement.anchorMin = center;
+uiElement.anchorMax = center;
+uiElement.anchoredPosition = Vector2.zero;
+//这样UI会造成形变挤压显示不出来
+```
+
+![image-20240418201045375](assets/image-20240418201045375.png)
+
+
+
+
+
+Canvas随屏幕缩放时，到GetWordCorner是到Canvas底部的距离吧，<font color=red>X</font>
+
+应该是到屏幕底部（也就是分辨率）的距离
+
+
+
+## 世界坐标到ugui屏幕坐标
+
+[Unity ugui屏幕适配与世界坐标到ugui屏幕坐标的转换](https://cloud.tencent.com/developer/article/1601274)
+
+[Unity 极简UI框架](https://cloud.tencent.com/developer/article/1624926)
+
+[Unity UGUI 原理篇(二)：Canvas Scaler 縮放核心](https://www.arkaistudio.com/blog/2016/03/28/unity-ugui-%e5%8e%9f%e7%90%86%e7%af%87%e4%ba%8c%ef%bc%9acanvas-scaler-%e7%b8%ae%e6%94%be%e6%a0%b8%e5%bf%83/)
+
+
+
+[Unity 世界坐标、屏幕坐标、UGUI 坐标 相互转换](https://blog.csdn.net/LIQIANGEASTSUN/article/details/124413387)
+
+[Unity 中 Screen坐标 转 Canvas坐标](https://blog.csdn.net/NRatel/article/details/101056517)  [大佬的文章包含ListView GridView](https://blog.csdn.net/nratel/category_8301031.html)
+
+
+
+[Canvas](https://so.csdn.net/so/search?q=Canvas&spm=1001.2101.3001.7020)坐标系，以屏幕中心为原点，向右为X轴正方向，向上为Y轴正方向。
+
+设置transform.position = new Vector3(0, 0, 0);会出现在屏幕中央
+
+![image-20240419191058954](assets/image-20240419191058954.png)
+
+## GetWorldCorners
+
+使用这个方法，可以取得UI元素四个角的世界坐标，具体使用方法，先建立一个长度为4的vector3数组，然后传进这个方法，调用一次后，数组被赋值，里面的四个元素分别是UI的`左下角` ，`左上角`，`右上角`，`右下角`。
+
+
+
+
+
+```csharp
+
+```
+
+
+
+
+
+# 红点系统
+
+[Unity手游实战：从0开始SLG——独立功能扩展（三）用树实现客户端红点系统](https://zhuanlan.zhihu.com/p/85978429)
+
+
+
+
+
+# 拼UI工具
+
+
+
+[【Unity编辑器扩展】(三)PSD转UGUI Prefab, 一键拼UI解放美术/程序(完结)](【Unity编辑器扩展】(三)PSD转UGUI Prefab, 一键拼UI解放美术/程序(完结))
+
+
+
+## 下载PSD解析库
+
+https://releases.aspose.com/psd/net/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```csharp
+1.不能从上往下滚
+2.刷新问题，用代码滚不能刷新
+```
+

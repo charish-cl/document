@@ -17,18 +17,7 @@ https://aihailan.com/archives/466
 自定义Add方法
 
 ```cs
-[ListDrawerSettings(Expanded = true,CustomAddFunction = "Add")]
-public List<int> _ints;
-
-private int newInt = 0;
-
-private void Add()
-{
-    _ints.Add(newInt);
-    _ints.Add(newInt);
-    
-    newInt = 0;
-}
+100
 ```
 
 

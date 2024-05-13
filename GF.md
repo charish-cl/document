@@ -48,13 +48,72 @@ UI中虽然持有这个，但没有使用过，应该是不提倡UI写逻辑的�
 
 
 
-## Item
+## Item模块
 
 Item只有两个，选关界面和建塔界面 
 
 ![image-20240413213033803](assets/image-20240413213033803.png)
 
+UI上面的不该频繁销毁的，毕竟经常用，应该只有OnHide方法，不该有OnRemove方法，或者Destroy这种，它应该跟UIForm的生命周期保持一致
+
+### ItmeManager
+
+![image-20240416201218732](assets/image-20240416201218732.png)
+
+Item持有了资源，对象池，与IItemHelper的接口
+
+![image-20240416201951353](assets/image-20240416201951353.png)
+
+### 如何回收？
+
+关闭界面上自动回收，调用
+
+![image-20240416202753409](assets/image-20240416202753409.png)
+
+```cs
+/// <summary>
+/// 从实体组移除实体。
+/// </summary>
+/// <param name="Item">要移除的实体。</param>
+public void RemoveItem(IItem Item)
+{
+    if (m_CachedNode != null && m_CachedNode.Value == Item)
+    {
+        m_CachedNode = m_CachedNode.Next;
+    }
+
+    if (!m_Items.Remove(Item))
+    {
+        throw new GameFrameworkException(Utility.Text.Format("Item group '{0}' not exists specified Item '[{1}]{2}'.", m_Name, Item.Id.ToString(), Item.ItemAssetName));
+    }
+}
+```
+
+
+
+### ItemInstance作为回收对象，继承了ObjectBase
+
+![image-20240416203222897](assets/image-20240416203222897.png)
+
+
+
+## LevelControl
+
+GF经典创建销毁方法，在类里面生命一个Create静态函数取代new操作，继承IReference
+
+
+
+![image-20240415083406282](assets/image-20240415083406282.png)
+
+
+
 # GF
+
+## 好文
+
+[花花](https://www.zhihu.com/column/c_1436501161410596864)
+
+ [实体](https://zhuanlan.zhihu.com/p/652951305)
 
 ## 源码
 
@@ -519,7 +578,13 @@ you must initialize procedure
 
 ## 实体模块
 
-### 为何要额外添加一个EntityLogic
+[细到变量解释](https://zhuanlan.zhihu.com/p/652951305)
+
+
+
+
+
+### 有了Entity，为何要额外添加一个EntityLogic
 
 ```
 我在这简单说一下我的理解哈，先说Entity这部分，Entity类才是被框架直接管理的类，因为他实现了IEntity接口，这个接口被GF部分管理，而我们业务是继承EnityLogic不直接继承Entity，Entity是个sealed类，最主要的作用是防止业务继承Entity后override了父类方法，改写了原本的逻辑，会破坏了框架的管理逻辑，那怎么办呢，那就是添加一个EnityLogic，业务只能继承EnityLogic，那就不怕Entity的逻辑被覆盖了。至于EnityLogic里持有了Entity，只是比较方便通过EnityLogic获取他对应的Entity而已。
@@ -672,6 +737,125 @@ public  void Show()
 EventSubscriber与ItemSubscriber
 
 
+
+
+
+### 打开界面UI的RectTransform初始值不为0
+
+是因为加了这个吗？
+
+![image-20240416112101833](assets/image-20240416112101833.png)
+
+并不是，还是会改变
+
+![image-20240416112331119](assets/image-20240416112331119.png)
+
+
+
+应该是跟UIGroup有关，如何创建UIGroup的
+
+```csharp
+//------------------------------------------------------------
+// Game Framework
+// Copyright © 2013-2021 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
+//------------------------------------------------------------
+
+using UnityEngine.UI;
+using UnityEngine;
+
+namespace UnityGameFramework.Runtime
+{
+
+    /// <summary>
+    /// 默认界面组辅助器。
+    /// </summary>
+    public class DefaultUIGroupHelper : UIGroupHelperBase
+    {
+        public const int DepthFactor = 100;
+
+        private int m_Depth = 0;
+        private Canvas m_CachedCanvas = null;
+
+        /// <summary>
+        /// 设置界面组深度。
+        /// </summary>
+        /// <param name="depth">界面组深度。</param>
+        public override void SetDepth(int depth)
+        {
+            m_Depth = depth;
+            m_CachedCanvas.overrideSorting = true;
+            m_CachedCanvas.sortingOrder = DepthFactor * depth;
+        }
+
+        private void Awake()
+        {
+            m_CachedCanvas = gameObject.GetOrAddComponent<Canvas>();
+            gameObject.GetOrAddComponent<GraphicRaycaster>();
+        }
+
+        private void Start()
+        {
+            m_CachedCanvas.overrideSorting = true;
+            m_CachedCanvas.sortingOrder = DepthFactor * m_Depth;
+
+            RectTransform transform = GetComponent<RectTransform>();
+            transform.anchorMin = Vector2.zero;
+            transform.anchorMax = Vector2.one;
+            transform.anchoredPosition = Vector2.zero;
+            transform.sizeDelta = Vector2.zero;
+        }
+    }
+}
+
+```
+
+
+
+
+
+```csharp
+ /// <summary>
+        /// 增加界面组。
+        /// </summary>
+        /// <param name="uiGroupName">界面组名称。</param>
+        /// <param name="depth">界面组深度。</param>
+        /// <returns>是否增加界面组成功。</returns>
+        public bool AddUIGroup(string uiGroupName, int depth)
+        {
+            if (m_UIManager.HasUIGroup(uiGroupName))
+            {
+                return false;
+            }
+
+            UIGroupHelperBase uiGroupHelper = Helper.CreateHelper(m_UIGroupHelperTypeName, m_CustomUIGroupHelper, UIGroupCount);
+            if (uiGroupHelper == null)
+            {
+                Log.Error("Can not create UI group helper.");
+                return false;
+            }
+
+            uiGroupHelper.name = Utility.Text.Format("UI Group - {0}", uiGroupName);
+            uiGroupHelper.gameObject.layer = LayerMask.NameToLayer("UI");
+            Transform transform = uiGroupHelper.transform;
+            transform.SetParent(m_InstanceRoot);
+            transform.localScale = Vector3.one;
+
+            return m_UIManager.AddUIGroup(uiGroupName, depth, uiGroupHelper);
+        }
+
+```
+
+
+
+
+
+### UI被覆盖
+
+关闭打开时会刷新对应的组，去执行OnCover，OnReveal方法
+
+![image-20240508162828751](assets/image-20240508162828751.png)
 
 ## EventPool
 
