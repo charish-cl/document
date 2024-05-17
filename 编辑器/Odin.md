@@ -17,48 +17,30 @@ https://aihailan.com/archives/466
 自定义Add方法
 
 ```cs
-100
+FriendAndSocial.PlayWithFriendTxt	與好友一起進行游戲！快樂加倍哦！
+FriendAndSocial.Invite	邀請
+FriendAndSocial.Global	全球
+FriendAndSocial.Local	本地
+FriendAndSocial.Friend	好友
+FriendAndSocial.Title	好友與社交
+FriendAndSocial.AddFriend	添加好友
+FriendAndSocial.Record	互动记录
+FriendAndSocial.Rank	排行榜
+FriendAndSocial.InviteNoPlayFriend	邀請從未玩過此游戲的玩家
+FriendAndSocial.FriendComeInGame	好友加入游戲
+FriendAndSocial.FinishProcessGetRewardTip	完成進度條並獲得豐厚的獎勵
+FriendAndSocial.GameRule	游戲規則
+FriendAndSocial.FriendNumTip	好友：{0}/{1}
+FriendAndSocial.InviteFriendAndGetRewardTxt	邀請好友還能獲得獎勵哦！
+FriendAndSocial.DelectFriendAsk	請問是否確定要刪除當前好友？
+FriendAndSocial.Confirm	確定
+FriendAndSocial.Undo	撤回
+FriendAndSocial.ConfirmAsk	你確定嗎？
+FriendAndSocial.NewFriend	新加好友
+
 ```
 
 
 
 
 
-
-
-```
-把Dictionary替换成List,并添加[TableList]特性,并添加一个功能当我页面修改TextMeshProUGUI的内容是,Selection要选中这个字体,且现在List中的元素为一个自定义的,它包含路径(与Canvas的相对路径),name,和
-
-[LabelText("UI工具/字体工具")]
-public class TextMeshWindow:OdinEditorWindow
-{
-    public  Dictionary<TextMeshProUGUI, string> textMeshDictionary;
-
-    [Button("获取所有字体",ButtonSizes.Large)]
-    public void GetAllTextMesh()
-    {
-
-        // Initialize dictionary
-        textMeshDictionary = new Dictionary<TextMeshProUGUI, string>();
-        // Find all TextMesh components under the Canvas object
-        
-        Canvas canvas = FindObjectOfType<Canvas>();
-        if (canvas != null)
-        {
-            TextMeshProUGUI[] textMeshes = canvas.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach (TextMeshProUGUI textMesh in textMeshes)
-            {
-                textMeshDictionary[textMesh] = textMesh.text;
-            }
-        }
-    }
-    [Button("保存",ButtonSizes.Large)]
-    public void Save()
-    {
-        foreach (var  entry in textMeshDictionary)
-        {
-            entry.Key.text = entry.Value;
-        }
-    }
-}
-```
