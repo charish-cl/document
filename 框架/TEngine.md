@@ -286,81 +286,36 @@ public static bool AddEventListener<TArg1, TArg2>(int eventType, Action<TArg1, T
 
 
 
-### Widget模块
+### UIWidget
+
+UI组件类，用于红点，按钮等一些通用模块
 
 ### UIWindow
 
+窗口类
+
 并没有继承Monobehavior而是选择在类中持有对象
 
-```csharp
+每个UI都有Window特性，用于选择层级，分组，资源路径等
 
-using UnityGameFramework.Runtime;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-namespace MonoPoly
-{
-    public class ShopUIForm : UIFormLogicExtend
-    {
-        
-        public Button Right { get;  set; }
-        public Image BillboardBgImg { get;  set; }
-        public Button Left { get;  set; }
-        public RectTransform BillboardBottomIcon { get;  set; }
-        public Button CloseBtn { get;  set; }
+### 创建UI的关键代码
 
-        protected override void OnInit(object userData)
-        {
-            base.OnInit(userData);
-            
-            Right = transform.Find("Billboard/Top/m_btn_Right").GetComponent<Button>();
-            Right.onClick.AddListener(() => OnClick_Right());
-            BillboardBgImg = transform.Find("Billboard/Top/m_img_BillboardBgImg").GetComponent<Image>();
-            Left = transform.Find("Billboard/Top/m_btn_Left").GetComponent<Button>();
-            Left.onClick.AddListener(() => OnClick_Left());
-            BillboardBottomIcon = transform.Find("Billboard/Top/m_rect_BillboardBottomIcon").GetComponent<RectTransform>();
-            CloseBtn = transform.Find("Bottom/m_btn_CloseBtn").GetComponent<Button>();
-            CloseBtn.onClick.AddListener(() => OnClick_CloseBtn());
+![image-20240528142357765](assets/image-20240528142357765.png)
 
-        }
+之前使用的Tab模块好用吗？虽然减少了代码量，减少了页面的组件数量
 
-        protected override void OnOpen(object userData)
-        {
-            base.OnOpen(userData);
-        }
+但做公益那部分时不可避免的出来许多问题，维护这种关系，而且有可能两个界面都有这个组件但位置以及其它一些属性不一样
 
-        protected override void OnClose(bool isShutdown, object userData)
-        {
-            base.OnClose(isShutdown, userData);
-        }
+两个解决方案吧，又想了一个
 
-        protected override void OnPause()
-        {
-            base.OnPause();
-        }
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-        }
-        
-        private void OnClick_Right()
-        {
-        
-        }
-
-        private void OnClick_Left()
-        {
-        
-        }
-
-        private void OnClick_CloseBtn()
-        {
-        
-        }
+1. 挂载到Unity上，实现一个切换Tab预览的功能，不要在代码里面添加了
+2. 每个界面依然各自摆放组件，但运行时动态去重，那些相同的预制体收集到一起，大概率功能都是相同的
+3. 目前这种把一堆页面摆放在一起的这种方式不太合理，应该用UIWidget加动态选择资源来处理，但这样可能也麻烦，而且预览起来不方便
 
 
-    }
-}
-```
 
+
+
+# YIUI
+
+一对多绑定
