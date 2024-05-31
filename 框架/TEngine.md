@@ -318,4 +318,87 @@ UI组件类，用于红点，按钮等一些通用模块
 
 # YIUI
 
-一对多绑定
+一对多绑定，这种按钮触发事件确实是个不错思路，很多个按钮对应一个事件
+
+组件绑定数据还要单独的添加类，这并不是我想要的啊，或者工具还不够方便，虽然不用写代码
+
+- 需要才会加载
+- 根据使用频率判断UIView是否需要动态创建，设置销毁延时
+
+没有对Data和Event表扩展时才会用回到组件表
+
+# UI思考
+
+UIStaticItem根本没必要设置这个，直接判断挂载在上面就是不需要回收的呗
+
+要是支持动态绑定，而且没必要全部绑定，有的时候只需要绑定其中几个，热插拔就好了
+
+```
+using System.Collections.Generic;
+
+namespace MonoPoly
+{
+    public class UIConfig
+    {
+
+        public List<UIGroup> UIGroups = new List<UIGroup>()
+        {
+
+        };
+
+    }
+
+    public class UIGroup
+    {
+        public string Name;
+
+        public int Layer;
+    }
+}这里为UIGroups填充基本数据 MainUI 0 
+BuildUI 10
+GetCommonRewardUI 10
+RandomEvent 30
+RewardGroup 40 
+DebugUI 50 
+```
+
+```csharp
+using System;
+
+namespace MonoPoly
+{
+    [AttributeUsage(AttributeTargets.Class)]
+    public class WindowAttribute : Attribute
+    {
+        /// <summary>
+        /// 资源定位地址。
+        /// </summary>
+        public readonly string Location;
+
+        
+        /// <summary>
+        /// UI 组名。
+        /// </summary>
+        public readonly string UIGroupName;
+
+        /// <summary>
+        /// 是否使用默认动画。
+        /// </summary>
+        public readonly bool UseDefaultAnimation;
+
+        /// <summary>
+        /// 默认动画是否需要弹跳效果。
+        /// </summary>
+        public readonly bool IsNeedBounce;
+
+        public WindowAttribute(string location = "",  string uiGroupName = "", bool useDefaultAnimation = true, bool isNeedBounce = true)
+        {
+            Location = location;
+            UIGroupName = uiGroupName;
+            UseDefaultAnimation = useDefaultAnimation;
+            IsNeedBounce = isNeedBounce;
+        }
+    }
+}这里加上LableText注释，而且
+```
+

@@ -7,3 +7,28 @@
 
 
  
+
+    public  class NormalBtnItem
+    {   
+        
+        public Button NormalBtn { get;  set; }
+        public TextMeshProUGUI BtnText { get;  set; }
+        public Transform BgParent { get;  set; }
+    
+        public NormalBtnItem (Transform transform)
+        {
+            
+            NormalBtn = transform.Find("").GetComponent<Button>();
+            NormalBtn.onClick.AddListener(() => OnClick_NormalBtn());
+            BtnText = transform.Find("BtnText").GetComponent<TextMeshProUGUI>();
+            BgParent = transform.Find("BgParent").GetComponent<Transform>();
+    
+        }
+        
+        private void OnClick_NormalBtn()
+        {
+        
+        }
+
+
+    }

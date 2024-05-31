@@ -370,6 +370,8 @@ CloseActions.Add(() =>
 
 
 
+# verticalNormalizedPosition 有误差！
+
 # UGUI源码
 
 [UGUI源码分析](https://blog.csdn.net/qq_28820675/category_9923575.html)
